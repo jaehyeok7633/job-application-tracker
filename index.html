@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Application Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <h1 class="brand-title">Job Application Tracker</h1>
+        <p class="brand-subtitle">취업 지원 현황을 체계적으로 기록하고 관리하는 대시보드</p>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- 1. 지원 정보 입력 폼 -->
+      <section class="card form-card">
+        <div class="card-header">
+          <h2 class="card-title" id="form-title">지원 내역 등록</h2>
+        </div>
+        
+        <form id="application-form" class="application-form" novalidate>
+          <input type="hidden" id="edit-id" value="">
+
+          <div class="form-grid">
+            <!-- 회사명 -->
+            <div class="form-group">
+              <label for="company-name" class="form-label">회사명 <span class="required">*</span></label>
+              <input type="text" id="company-name" class="form-input" placeholder="예: 구글코리아" required>
+            </div>
+
+            <!-- 지원 직무 -->
+            <div class="form-group">
+              <label for="job-title" class="form-label">지원 직무 <span class="required">*</span></label>
+              <input type="text" id="job-title" class="form-input" placeholder="예: 프론트엔드 엔지니어" required>
+            </div>
+
+            <!-- 채용공고 URL -->
+            <div class="form-group">
+              <label for="job-url" class="form-label">채용공고 URL</label>
+              <input type="url" id="job-url" class="form-input" placeholder="https://...">
+            </div>
+
+            <!-- 지원일 -->
+            <div class="form-group">
+              <label for="apply-date" class="form-label">지원일 <span class="required">*</span></label>
+              <input type="date" id="apply-date" class="form-input" required>
+            </div>
+
+            <!-- 진행상태 -->
+            <div class="form-group">
+              <label for="status" class="form-label">진행상태 <span class="required">*</span></label>
+              <select id="status" class="form-select" required>
+                <option value="지원예정">지원예정</option>
+                <option value="지원완료" selected>지원완료</option>
+                <option value="서류합격">서류합격</option>
+                <option value="면접">면접</option>
+                <option value="불합격">불합격</option>
+                <option value="최종합격">최종합격</option>
+              </select>
+            </div>
+
+            <!-- 메모 -->
+            <div class="form-group full-width">
+              <label for="notes" class="form-label">메모</label>
+              <textarea id="notes" class="form-textarea" rows="3" placeholder="전형 특이사항, 과제 일정, 면접 후기 등을 입력하세요"></textarea>
+            </div>
+          </div>
+
+          <!-- 폼 액션 버튼 -->
+          <div class="form-actions">
+            <button type="button" id="cancel-btn" class="btn btn-secondary" style="display: none;">취소</button>
+            <button type="submit" id="save-btn" class="btn btn-primary">저장</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. 지원 내역 목록 테이블 -->
+      <section class="card table-card">
+        <div class="card-header list-header">
+          <div class="header-left">
+            <h2 class="card-title">지원 내역 목록</h2>
+            <span class="badge count-badge" id="total-count">0건</span>
+          </div>
+        </div>
+
+        <!-- 검색 및 진행상태 필터 영역 -->
+        <div class="filter-toolbar">
+          <div class="search-field">
+            <input type="text" id="search-input" class="form-input search-input" placeholder="회사명 또는 직무로 검색...">
+          </div>
+          <div class="filter-field">
+            <select id="status-filter" class="form-select filter-select">
+              <option value="전체">전체</option>
+              <option value="지원예정">지원예정</option>
+              <option value="지원완료">지원완료</option>
+              <option value="서류합격">서류합격</option>
+              <option value="면접">면접</option>
+              <option value="불합격">불합격</option>
+              <option value="최종합격">최종합격</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th scope="col" class="col-company">회사명</th>
+                <th scope="col" class="col-job">직무</th>
+                <th scope="col" class="col-date">지원일</th>
+                <th scope="col" class="col-status">상태</th>
+                <th scope="col" class="col-notes">메모</th>
+                <th scope="col" class="col-action">수정</th>
+                <th scope="col" class="col-action">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="application-list">
+              <!-- JavaScript를 통해 행이 동적으로 렌더링됩니다 -->
+            </tbody>
+          </table>
+
+          <!-- 목록이 비었을 때 노출되는 안내 영역 -->
+          <div id="empty-state" class="empty-state" style="display: none;">
+            <p class="empty-title" id="empty-title">등록된 지원 내역이 없습니다.</p>
+            <p class="empty-desc" id="empty-desc">상단 폼을 작성해 새로운 지원 정보를 추가해보세요.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
